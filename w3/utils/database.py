@@ -44,9 +44,22 @@ class DB:
 
         Read more about datatypes in Sqlite here -> https://www.sqlite.org/datatype3.html
         """
-    ######################################## YOUR CODE HERE ##################################################
-
-    ######################################## YOUR CODE HERE ##################################################
+        ######################################## YOUR CODE HERE ##################################################
+        sql = f"""
+        create table if not exists {self._table_name}
+        (
+            process_id TEXT not null,
+            file_name TEXT default null,
+            file_path TEXT default null,
+            description TEXT default null,
+            start_time TEXT not null,
+            end_time TEXT default null,
+            percentage REAL default null
+        )
+        """
+        self._connection.execute(sql)
+        self._connection.commit()
+        ######################################## YOUR CODE HERE ##################################################
 
     def insert(self, process_id, start_time, file_name=None, file_path=None,
                description=None, end_time=None, percentage=None) -> None:
@@ -62,9 +75,35 @@ class DB:
         :param percentage: Percentage of process completed
         :return: None
         """
-    ######################################## YOUR CODE HERE ##################################################
-
-    ######################################## YOUR CODE HERE ##################################################
+        ######################################## YOUR CODE HERE ##################################################
+        sql = f"""
+        insert into {self._table_name}
+        (
+            process_id,
+            start_time,
+            file_name,
+            file_path,
+            description,
+            end_time,
+            percentage
+        )
+        values
+        (
+            ?,?,?,?,?,?,?
+        )
+        """
+        params = [
+            process_id,
+            start_time,
+            file_name,
+            file_path,
+            description,
+            end_time,
+            percentage
+        ]
+        self._connection.execute(sql, params)
+        self._connection.commit()
+        ######################################## YOUR CODE HERE ##################################################
 
     def read_all(self) -> List[Dict]:
         data = []
@@ -94,8 +133,14 @@ class DB:
         :param percentage: Percentage of process completed
         :return: None
         """
-    ######################################## YOUR CODE HERE ##################################################
-
-    ######################################## YOUR CODE HERE ##################################################
+        ######################################## YOUR CODE HERE ##################################################
+        sql = f"""
+        update {self._table_name}
+        set percentage = {percentage}
+        where process_id = '{process_id}'
+        """
+        self._connection.execute(sql)
+        self._connection.commit()
+        ######################################## YOUR CODE HERE ##################################################
 
 

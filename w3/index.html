@@ -41,6 +41,7 @@
             var url = new URL(urlString);
 
             // Make a websocket connection
+            // use the link to your server instead of localhost to make it work, not localhost
             var ws = new WebSocket(`ws://localhost:8000/ws`);
 
             // On receiving a message, append it to the unordered list `messages`
